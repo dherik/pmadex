@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using System.IO.IsolatedStorage;
 
 namespace PmaDex.Pages
 {
@@ -19,7 +20,15 @@ namespace PmaDex.Pages
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-               
+
+            if (this.txtboxDescription.Text == "")
+            {
+                MessageBox.Show("Descrição não estar vazia");
+            }
+
+            IsolatedStorageSettings settings = IsolatedStorageSettings.ApplicationSettings;
+            settings["description"] = this.txtboxDescription;
+            settings.Save();
         }
     }
 }
