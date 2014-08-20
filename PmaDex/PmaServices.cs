@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO.IsolatedStorage;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -143,13 +144,14 @@ namespace PmaDex
         //token, data(yyyy-mm-dd), atividadeId, atividadeStatus("working" ou "concluded"), esforco(min), descricao 
         private async Task<string> CreateAppointment(string token, string day, string idActivity, string effort)
         {
+            string description = IsolatedStorageSettings.ApplicationSettings["description"] as string;
             var values = new List<KeyValuePair<string, string>> { 
                 new KeyValuePair<string, string>("token", token), 
                 new KeyValuePair<string, string>("data", day),
                 new KeyValuePair<string, string>("atividadeId", idActivity),
                 new KeyValuePair<string, string>("atividadeStatus", "concluded"),
                 new KeyValuePair<string, string>("esforco", effort),
-                new KeyValuePair<string, string>("descricao", )
+                new KeyValuePair<string, string>("descricao", description)
             };
             var httpClient = new HttpClient(new HttpClientHandler());
             HttpResponseMessage response = await httpClient.PostAsync(urlCriarApontamento, new FormUrlEncodedContent(values));
