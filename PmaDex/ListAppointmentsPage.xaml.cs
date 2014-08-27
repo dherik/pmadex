@@ -71,7 +71,8 @@ namespace PmaDex
             MessageBoxResult result = MessageBox.Show("Você deseja realmente remover o apontamento?", "Remover apontamento?", MessageBoxButton.OKCancel);
             if (result == MessageBoxResult.OK)
             {
-                MessageBox.Show("Apontamento removido!");
+                //var selected = (sender as MenuItem).DataContext as DailyAppointment;
+                MessageBox.Show("Apontamento removido! (não implementado)");
             }
             
         }

@@ -131,6 +131,11 @@ namespace PmaDex
 
         private void btnList_Click(object sender, EventArgs e)
         {
+            GoToListAppointmentsPage();
+        }
+
+        private void GoToListAppointmentsPage()
+        {
             Dispatcher.BeginInvoke(() =>
             {
                 NavigationService.Navigate(new Uri("/ListAppointmentsPage.xaml", UriKind.Relative));
@@ -181,10 +186,51 @@ namespace PmaDex
 
         private void btnConfig_Click(object sender, EventArgs e)
         {
+            GoToConfigPage();
+        }
+
+
+        private void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            switch (((Pivot)sender).SelectedIndex)
+            {
+                case 0:
+                    this.ApplicationBar = this.Resources["AppBarSimple"] as ApplicationBar;
+                    break;
+
+                case 1:
+                    this.ApplicationBar = this.Resources["AppBarAdvanced"] as ApplicationBar;
+                    break;
+            }
+        }
+
+        private void btnListAdv_Click(object sender, EventArgs e)
+        {
+            GoToListAppointmentsPage();
+        }
+
+        private void btnAddAdv_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnSaveAdv_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnConfigAdv_Click(object sender, EventArgs e)
+        {
+            GoToConfigPage();
+        }
+
+        private void GoToConfigPage()
+        {
             Dispatcher.BeginInvoke(() =>
             {
                 NavigationService.Navigate(new Uri("/ConfigPage.xaml", UriKind.Relative));
             });
         }
+
     }
 }

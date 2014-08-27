@@ -42,17 +42,17 @@
         </Grid.RowDefinitions>
 
         <!--Pivot Control-->
-        <phone:Pivot Title="PMA">
+        <phone:Pivot Title="PMA" SelectionChanged="Pivot_SelectionChanged">
             <!--Pivot item one-->
             <phone:PivotItem Header="simples" Name="pvtSaveAppointment" >
 
                 <ScrollViewer>
                     <StackPanel Grid.Row="0">
                         <toolkit:DatePicker Margin="12,0,12,0"
-                        Header="Data"
-                        ValueStringFormat="{}{0:dd/MM/yyyy}" 
-                        HorizontalAlignment="Left"
-                        x:Name="dpkDate" 
+                            Header="Data"
+                            ValueStringFormat="{}{0:dd/MM/yyyy}" 
+                            HorizontalAlignment="Left"
+                            x:Name="dpkDate" 
                             Width="200" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="12,0,12,0">
                             <toolkit:TimePicker
@@ -131,10 +131,6 @@
                                     Width="140"
                                     x:Name="tpkEffort" 
                                     Value="08:00"/>
-                                <!--<TextBlock x:Name="txtEffortTip"
-                                        Text="08:00"
-                                        TextWrapping="Wrap"
-                                        Margin="12"/>-->
                             </StackPanel>
 
                         </StackPanel>
@@ -144,15 +140,53 @@
 
             <!--Pivot item two-->
             <phone:PivotItem Header="avançado">
-                
+                <StackPanel Grid.Row="0">
+                    <toolkit:DatePicker Margin="12,0,12,0"
+                            Header="Data"
+                            ValueStringFormat="{}{0:dd/MM/yyyy}" 
+                            HorizontalAlignment="Left"
+                            x:Name="dpkDateAdv" 
+                            Width="200" />
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="12,0,12,0">
+                        <toolkit:TimePicker
+                                Header="Início"
+                                ValueStringFormat="{}{0:H:mm}"
+                                Width="140"
+                                x:Name="tpkStartHourAdv" 
+                                Value="08:00"
+                                ValueChanged="tpkStartHour_ValueChanged"/>
+
+                        <toolkit:TimePicker 
+                                Header="Fim" 
+                                ValueStringFormat="{}{0:H:mm}"
+                                Width="140"
+                                x:Name="tpkEndHourAdv" 
+                                Value="17:00"
+                                ValueChanged="tpkEndHour_ValueChanged"/>
+
+                        <toolkit:TimePicker 
+                                Header="Intervalo"
+                                ValueChanged="tpkRest_ValueChanged"
+                                ValueStringFormat="{}{0:H:mm}"
+                                Width="140"
+                                x:Name="tpkRestAdv" 
+                                Value="01:00"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="0" Margin="12,0,12,0">
+                        <TextBlock HorizontalAlignment="Left" 
+                           Text="apontamentos" 
+                           Style="{StaticResource PhoneFontSizeNormal}" 
+                                   Margin="12,0,12,0" FontFamily="Segoe WP Light"/>
+                    </StackPanel>
+                </StackPanel>
             </phone:PivotItem>
 
         </phone:Pivot>
       
     </Grid>
 
-    <phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar IsVisible="true" IsMenuEnabled="true">
+    <phone:PhoneApplicationPage.Resources>
+        <shell:ApplicationBar x:Key="AppBarSimple" IsVisible="True" IsMenuEnabled="True">
             <shell:ApplicationBarIconButton  x:Name="btnList" Click="btnList_Click"
                 IconUri="/Images/feature.search.png" Text="consultar"/>
             <shell:ApplicationBarIconButton  x:Name="btnSave" Click="btnSave_Click"
@@ -161,7 +195,20 @@
                 <shell:ApplicationBarMenuItem  Click="btnConfig_Click" Text="Configurações"/>
             </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
-    </phone:PhoneApplicationPage.ApplicationBar>
+
+        <shell:ApplicationBar x:Key="AppBarAdvanced" IsVisible="True" IsMenuEnabled="True">
+            <shell:ApplicationBarIconButton  x:Name="btnListAdv" Click="btnListAdv_Click"
+                IconUri="/Images/feature.search.png" Text="consultar"/>
+            <shell:ApplicationBarIconButton  x:Name="btnAddAdv" Click="btnAddAdv_Click"
+                IconUri="/Images/add.png" Text="atividade"/>
+            <shell:ApplicationBarIconButton  x:Name="btnSaveAdv" Click="btnSaveAdv_Click"
+                IconUri="/Images/save.png" Text="salvar"/>
+            <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem  Click="btnConfigAdv_Click" Text="Configurações"/>
+            </shell:ApplicationBar.MenuItems>
+        </shell:ApplicationBar>
+        
+    </phone:PhoneApplicationPage.Resources>
 
 
 </phone:PhoneApplicationPage>
