@@ -72,12 +72,13 @@ namespace PmaDex
             XDocument entry = XDocument.Parse(response);
             entry.Descendants("atividade").ToList().ForEach(xe =>
             {
-                PmaActivity pmaActivity = new PmaActivity();
-                pmaActivity.id = (string)xe.Element("id");
-                pmaActivity.nomeAtividade = (string)xe.Element("nome");
-                pmaActivity.nomeCliente = (string)xe.Element("cliente");
-                pmaActivity.nomeProjeto = (string)xe.Element("projeto");
-                activities.Add(pmaActivity);
+                activities.Add(new PmaActivity
+                {
+                    id = (string)xe.Element("id"),
+                    nomeAtividade = (string)xe.Element("nome"),
+                    nomeCliente = (string)xe.Element("cliente"),
+                    nomeProjeto = (string)xe.Element("projeto")
+                });
             });
             activities.OrderBy(pmaActivity => pmaActivity.nomeAtividade);
             return activities;
@@ -91,11 +92,13 @@ namespace PmaDex
 
             entry.Descendants("projeto").ToList().ForEach(xe =>
             {
-                PmaProject pmaProject = new PmaProject();
-                pmaProject.nomeCliente = (string)xe.Element("cliente");
-                pmaProject.nomeProjeto = (string)xe.Element("nome");
-                pmaProject.id = (string)xe.Element("id");
-                projects.Add(pmaProject);
+                projects.Add(new PmaProject
+                {
+                    id = (string) xe.Element("id"),
+                    nomeCliente = (string)xe.Element("cliente"),
+                    nomeProjeto = (string)xe.Element("nome")
+                });
+                
             });
 
             projects.OrderBy(pmaProject => pmaProject.nomeCliente);
@@ -223,18 +226,19 @@ namespace PmaDex
 
         private List<Appointment> hidrateListAppointment(string response)
         {
-             XDocument entry = XDocument.Parse(response);
+            XDocument entry = XDocument.Parse(response);
             List<Appointment> appointments = new List<Appointment>();
             foreach (XElement xe in entry.Descendants("apontamento"))
             {
-                Appointment appointment = new Appointment();
-                appointment.cliente = (string)xe.Element("cliente");
-                appointment.projeto = (string)xe.Element("projeto");
-                appointment.atividade = (string)xe.Element("atividade");
-                appointment.atividadeStatus = (string)xe.Element("atividadeStatus");
-                appointment.descricao = (string)xe.Element("descricao");
-                appointment.esforco = (string)xe.Element("esforco");
-                appointments.Add(appointment);
+                appointments.Add(new Appointment
+                {
+                    cliente = (string)xe.Element("cliente"),
+                    projeto = (string)xe.Element("projeto"),
+                    atividade = (string)xe.Element("atividade"),
+                    atividadeStatus = (string)xe.Element("atividadeStatus"),
+                    descricao = (string)xe.Element("descricao"),
+                    esforco = (string)xe.Element("esforco")
+                });
             }
 
             return appointments;
