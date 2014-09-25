@@ -175,7 +175,9 @@ namespace PmaDex
             var values = new List<KeyValuePair<string, string>> { 
                 new KeyValuePair<string, string>("token", token), 
                 new KeyValuePair<string, string>("dataInicial", startDate),
-                new KeyValuePair<string, string>("dataFinal", endDate)            };
+                new KeyValuePair<string, string>("dataFinal", endDate)            
+            };
+
             var httpClient = new HttpClient(new HttpClientHandler());
             HttpResponseMessage response = await httpClient.PostAsync(urlListarApontamentosDiarios, new FormUrlEncodedContent(values));
             response.EnsureSuccessStatusCode();
@@ -192,15 +194,13 @@ namespace PmaDex
             List<DailyAppointment> dailyAppointments = new List<DailyAppointment>();
 
             entry.Descendants("apontamentoDiario").ToList().ForEach(xe => {
-                DailyAppointment dailyAppointment = new DailyAppointment();
-                dailyAppointment.data = (string)xe.Element("data");
-                dailyAppointment.inicio = (string)xe.Element("inicio");
-                dailyAppointment.fim = (string)xe.Element("fim");
-                dailyAppointment.intervalo = (string)xe.Element("intervalo");
-
-                dailyAppointment.resume = dailyAppointment.inicio + " - " + dailyAppointment.fim + " (" + dailyAppointment.intervalo + ")";
-
-                dailyAppointments.Add(dailyAppointment);
+                dailyAppointments.Add(new DailyAppointment 
+                {
+                    Data = (string)xe.Element("data"),
+                    Inicio = (string)xe.Element("inicio"),
+                    Fim = (string)xe.Element("fim"),
+                    Intervalo = (string)xe.Element("intervalo")
+                });
             });
 
             //projects.OrderBy(pmaProject => pmaProject.data);
@@ -213,7 +213,8 @@ namespace PmaDex
         {
             var values = new List<KeyValuePair<string, string>> { 
                 new KeyValuePair<string, string>("token", token), 
-                new KeyValuePair<string, string>("data", data)            };
+                new KeyValuePair<string, string>("data", data)
+            };
 
             var httpClient = new HttpClient(new HttpClientHandler());
             HttpResponseMessage response = await httpClient.PostAsync(urlListarApontamentos, new FormUrlEncodedContent(values));
@@ -232,12 +233,12 @@ namespace PmaDex
             {
                 appointments.Add(new Appointment
                 {
-                    cliente = (string)xe.Element("cliente"),
-                    projeto = (string)xe.Element("projeto"),
-                    atividade = (string)xe.Element("atividade"),
-                    atividadeStatus = (string)xe.Element("atividadeStatus"),
-                    descricao = (string)xe.Element("descricao"),
-                    esforco = (string)xe.Element("esforco")
+                    Cliente = (string)xe.Element("cliente"),
+                    Projeto = (string)xe.Element("projeto"),
+                    Atividade = (string)xe.Element("atividade"),
+                    AtividadeStatus = (string)xe.Element("atividadeStatus"),
+                    Descricao = (string)xe.Element("descricao"),
+                    Esforco = (string)xe.Element("esforco")
                 });
             }
 

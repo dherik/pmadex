@@ -211,6 +211,22 @@ namespace PmaDex
 
         private void btnAddAdv_Click(object sender, EventArgs e)
         {
+            //List<Appointment> appointments = new List<Appointment>();
+            //appointments.Add(new Appointment
+            //{
+            //    Cliente = "cliente",
+            //    Projeto = "projeto",
+            //    Atividade = "atividade",
+            //    AtividadeStatus = "atividade status",
+            //    Descricao = "descricao",
+            //    Esforco = "04:00"
+            //});
+            //this.llsActivityAppointment.ItemsSource = appointments.ToArray();
+
+            Dispatcher.BeginInvoke(() =>
+            {
+                NavigationService.Navigate(new Uri("/AddActivityAdvancedPage.xaml", UriKind.Relative));
+            });
 
         }
 
@@ -230,6 +246,16 @@ namespace PmaDex
             {
                 NavigationService.Navigate(new Uri("/ConfigPage.xaml", UriKind.Relative));
             });
+        }
+
+        private void llsActivityAppointment_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void Delete_Click(object sender, RoutedEventArgs e)
+        {
+
         }
 
     }

@@ -32,14 +32,14 @@ namespace PmaDex
         private async void loadAppointment(DailyAppointment dailyAppointment)
         {
             //this.txtResume.Text = dailyAppointment.resume;
-            this.txtStart.Text = dailyAppointment.inicio;
-            this.txtEnd.Text = dailyAppointment.fim;
-            this.txtInterval.Text = dailyAppointment.intervalo;
+            this.txtStart.Text = dailyAppointment.Inicio;
+            this.txtEnd.Text = dailyAppointment.Fim;
+            this.txtInterval.Text = dailyAppointment.Intervalo;
 
-            this.txtDate.Text = dailyAppointment.data;
+            this.txtDate.Text = dailyAppointment.Data;
             
             PmaServices pma = new PmaServices();
-            List<Appointment> app = await pma.findAppointments(getTokenFromIsolatedStorage(), dailyAppointment.data);
+            List<Appointment> app = await pma.findAppointments(getTokenFromIsolatedStorage(), dailyAppointment.Data);
             this.llsAppointment.ItemsSource = app.ToArray();
         }
 

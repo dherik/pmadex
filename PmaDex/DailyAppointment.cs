@@ -8,11 +8,16 @@ namespace PmaDex
 {
     class DailyAppointment
     {
-        public string data { get; set; }
-        public string inicio { get; set; }
-        public string fim { get; set; }
-        public string intervalo { get; set; }
-
-        public string resume { get; set; }
+        public string Data { get; set; }
+        public string Inicio { get; set; }
+        public string Fim { get; set; }
+        public string Intervalo { get; set; }
+        public string Resumo {
+            get 
+            { 
+                return Inicio + " - " + Fim + " (" + Intervalo + ")"; 
+            }
+            set { Resumo = value; }
+        }
     }
 }
