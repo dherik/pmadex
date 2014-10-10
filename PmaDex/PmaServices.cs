@@ -94,14 +94,14 @@ namespace PmaDex
             {
                 projects.Add(new PmaProject
                 {
-                    id = (string) xe.Element("id"),
-                    nomeCliente = (string)xe.Element("cliente"),
-                    nomeProjeto = (string)xe.Element("nome")
+                    Id = (string) xe.Element("id"),
+                    NomeCliente = (string)xe.Element("cliente"),
+                    NomeProjeto = (string)xe.Element("nome")
                 });
                 
             });
 
-            projects.OrderBy(pmaProject => pmaProject.nomeCliente);
+            projects.OrderBy(pmaProject => pmaProject.NomeCliente);
             return projects;
         }
 

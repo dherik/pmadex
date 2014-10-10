@@ -8,8 +8,8 @@ namespace PmaDex
 {
     class PmaProject
     {
-        public string id { get; set; }
-        public string nomeProjeto { get; set; }
-        public string nomeCliente { get; set; }
+        public string Id { get; set; }
+        public string NomeProjeto { get; set; }
+        public string NomeCliente { get; set; }
     }
 }

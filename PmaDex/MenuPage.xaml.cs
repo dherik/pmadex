@@ -12,6 +12,7 @@ using System.Xml.Linq;
 using System.Collections;
 using System.IO.IsolatedStorage;
 using System.Collections.ObjectModel;
+using PmaDex.Util;
 
 namespace PmaDex
 {
@@ -33,7 +34,7 @@ namespace PmaDex
             if (NavigationContext.QueryString.ContainsKey("token"))
             {
                 string token = NavigationContext.QueryString["token"];
-                saveTokenToIsolatedStorage(token);
+                TokenUtil.SaveTokenToIsolatedStorage(token);
 
                 if (!isInit)
                 {
@@ -44,17 +45,10 @@ namespace PmaDex
             }
         }
 
-        private static void saveTokenToIsolatedStorage(string token)
-        {
-            // save value
-            IsolatedStorageSettings.ApplicationSettings["token"] = token;
-        }
-
         private async void loadProjects(string token)
         {
             PmaServices pmaServices = new PmaServices();
             List<PmaProject> projectsList = await pmaServices.loadProjects(token);
-
             this.lpkProjects.ItemsSource = projectsList.ToArray();
         }
 
@@ -67,9 +61,9 @@ namespace PmaDex
                 return;
             }
 
-            string token = getTokenFromIsolatedStorage();
+            string token = TokenUtil.GetTokenFromIsolatedStorage();
 
-            string id = pmaProject.id;
+            string id = pmaProject.Id;
             PmaServices pmaServices = new PmaServices();
             List<PmaActivity> activities = await pmaServices.loadActivities(token, id);
 
@@ -86,13 +80,7 @@ namespace PmaDex
             return minutes;
         }
 
-        private static string getTokenFromIsolatedStorage()
-        {
-            string token = IsolatedStorageSettings.ApplicationSettings.Contains("token")
-                ? (string)IsolatedStorageSettings.ApplicationSettings["token"]
-                : ""; // false is default value 
-            return token;
-        }
+        
 
         private void setProgressIndicator(bool value)
         {
@@ -103,7 +91,7 @@ namespace PmaDex
         
         private void btnSave_Click(object sender, EventArgs e)
         {
-            string token = getTokenFromIsolatedStorage();
+            string token = TokenUtil.GetTokenFromIsolatedStorage();
 
             var item = lpkActivities.SelectedItem;
             PmaActivity pmaActivity = (PmaActivity)item;
