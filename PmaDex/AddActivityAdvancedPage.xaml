@@ -38,16 +38,16 @@
                     <toolkit:ListPicker.ItemTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <TextBlock Text="{Binding nomeProjeto}"  />
-                                <TextBlock Text="{Binding nomeCliente}" FontSize="{StaticResource PhoneFontSizeSmall}"/>
+                                <TextBlock Text="{Binding NomeProjeto}"  />
+                                <TextBlock Text="{Binding NomeCliente}" FontSize="{StaticResource PhoneFontSizeSmall}"/>
                             </StackPanel>
                         </DataTemplate>
                     </toolkit:ListPicker.ItemTemplate>
                     <toolkit:ListPicker.FullModeItemTemplate>
                         <DataTemplate>
                             <StackPanel Margin="0,0,0,10">
-                                <TextBlock Text="{Binding nomeProjeto}" FontSize="{StaticResource PhoneFontSizeNormal}"/>
-                                <TextBlock Text="{Binding nomeCliente}" FontSize="{StaticResource PhoneFontSizeSmall}"/>
+                                <TextBlock Text="{Binding NomeProjeto}" FontSize="{StaticResource PhoneFontSizeNormal}"/>
+                                <TextBlock Text="{Binding NomeCliente}" FontSize="{StaticResource PhoneFontSizeSmall}"/>
                             </StackPanel>
                         </DataTemplate>
                     </toolkit:ListPicker.FullModeItemTemplate>

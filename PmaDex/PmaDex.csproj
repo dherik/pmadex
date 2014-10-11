@@ -105,6 +105,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Appointment.cs" />
+    <Compile Include="Converter\ListLengthVisibilityConverter.cs" />
     <Compile Include="DailyAppointment.cs" />
     <Compile Include="ListAppointmentsPage.xaml.cs">
       <DependentUpon>ListAppointmentsPage.xaml</DependentUpon>
