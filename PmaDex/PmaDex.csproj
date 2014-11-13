@@ -142,6 +142,7 @@
     <Compile Include="SampleData\SampleDataSource\SampleDataSource.xaml.cs">
       <DependentUpon>SampleDataSource.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Util\DateUtil.cs" />
     <Compile Include="Util\TokenUtil.cs" />
     <Compile Include="ViewAppointmentPage.xaml.cs">
       <DependentUpon>ViewAppointmentPage.xaml</DependentUpon>

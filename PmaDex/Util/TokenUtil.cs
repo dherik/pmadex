@@ -9,13 +9,13 @@ namespace PmaDex.Util
 {
     class TokenUtil
     {
-        public static void SaveTokenToIsolatedStorage(string token)
+        public static void SaveToken(string token)
         {
             // save value
             IsolatedStorageSettings.ApplicationSettings["token"] = token;
         }
 
-        public static string GetTokenFromIsolatedStorage()
+        public static string GetToken()
         {
             string token = IsolatedStorageSettings.ApplicationSettings.Contains("token")
                 ? (string)IsolatedStorageSettings.ApplicationSettings["token"]

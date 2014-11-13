@@ -79,7 +79,7 @@
                         Header="Esforço" 
                         ValueStringFormat="{}{0:H:mm}"
                         Width="140"
-                        x:Name="tpkEffort" 
+                        x:Name="tpkEffortAdv" 
                         Value="08:00"/>
                 </StackPanel>
                 

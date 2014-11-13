@@ -22,10 +22,42 @@ namespace PmaDex
             isInit = false;
         }
 
+        private PmaActivity GetSelectedActivity()
+        {
+            var item = lpkActivities.SelectedItem;
+            PmaActivity pmaActivity = (PmaActivity)item;
+            if (pmaActivity != null)
+            {
+                return pmaActivity;
+            }
+            return null;
+        }
+
         private void btnSave_Click(object sender, EventArgs e)
         {
+
+            //TODO passar atividade para lista de atividade da tela anterior
+
+            var activity = GetSelectedActivity();
+            if (activity == null)
+            {
+                MessageBox.Show("Não foram encontradas atividades");
+                return;
+            }
+
+            var pmaActivity = new PmaActivity
+            {
+                id = activity.id,
+                nomeProjeto = activity.nomeProjeto,
+                nomeCliente = activity.nomeCliente,
+                Effort = tpkEffortAdv.GetEffortInMinutes(),
+                Descricao = txtboxDescription.Text
+            };
+
             Dispatcher.BeginInvoke(() =>
             {
+                PhoneApplicationService.Current.State.Remove("pmaActivity");
+                PhoneApplicationService.Current.State["pmaActivity"] = pmaActivity;
                 NavigationService.Navigate(new Uri("/MenuPage.xaml", UriKind.Relative));
             });
         }
@@ -39,7 +71,7 @@ namespace PmaDex
                 return;
             }
 
-            string token = TokenUtil.GetTokenFromIsolatedStorage();
+            string token = TokenUtil.GetToken();
 
             string id = pmaProject.Id;
             PmaServices pmaServices = new PmaServices();
@@ -52,7 +84,7 @@ namespace PmaDex
         {
             if (!isInit)
             {
-                loadProjects(TokenUtil.GetTokenFromIsolatedStorage());
+                loadProjects(TokenUtil.GetToken());
                 isInit = true;
             }
         }

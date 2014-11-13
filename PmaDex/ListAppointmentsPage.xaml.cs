@@ -8,6 +8,7 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using System.IO.IsolatedStorage;
+using PmaDex.Util;
 
 namespace PmaDex
 {
@@ -24,12 +25,12 @@ namespace PmaDex
         private async void btnFind_Click(object sender, EventArgs e)
         {
             PmaServices pmaServices = new PmaServices();
-            string startDate = String.Format("{0:yyyy-MM-dd}", dpkStartDate.Value);
-            string endDate = String.Format("{0:yyyy-MM-dd}", dpkEndDate.Value);
+            string startDate = dpkStartDate.FormatToDiaMesAno();
+            string endDate = dpkEndDate.FormatToDiaMesAno();
 
             SystemTray.SetProgressIndicator(this, progressIndicator);
             setProgressIndicator(true);
-            List<DailyAppointment> list = await pmaServices.findDailyAppointments(getTokenFromIsolatedStorage(), startDate, endDate);
+            List<DailyAppointment> list = await pmaServices.findDailyAppointments(TokenUtil.GetToken(), startDate, endDate);
             setProgressIndicator(false);
 
             llsDailyAppointment.ItemsSource = list.ToArray();
@@ -39,14 +40,6 @@ namespace PmaDex
         {
             SystemTray.ProgressIndicator.IsIndeterminate = value;
             SystemTray.ProgressIndicator.IsVisible = value;
-        }
-
-        private static string getTokenFromIsolatedStorage()
-        {
-            string token = IsolatedStorageSettings.ApplicationSettings.Contains("token")
-                ? (string)IsolatedStorageSettings.ApplicationSettings["token"]
-                : ""; // false is default value 
-            return token;
         }
 
         private void llsDailyAppointment_SelectionChanged(object sender, SelectionChangedEventArgs e)

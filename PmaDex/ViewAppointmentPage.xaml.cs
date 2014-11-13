@@ -8,6 +8,7 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using System.IO.IsolatedStorage;
+using PmaDex.Util;
 
 namespace PmaDex
 {
@@ -39,16 +40,9 @@ namespace PmaDex
             this.txtDate.Text = dailyAppointment.Data;
             
             PmaServices pma = new PmaServices();
-            List<Appointment> app = await pma.findAppointments(getTokenFromIsolatedStorage(), dailyAppointment.Data);
+            List<Appointment> app = await pma.findAppointments(TokenUtil.GetToken(), dailyAppointment.Data);
             this.llsAppointment.ItemsSource = app.ToArray();
         }
 
-        private static string getTokenFromIsolatedStorage()
-        {
-            string token = IsolatedStorageSettings.ApplicationSettings.Contains("token")
-                ? (string)IsolatedStorageSettings.ApplicationSettings["token"]
-                : ""; // false is default value 
-            return token;
-        }
     }
 }

@@ -34,7 +34,7 @@ namespace PmaDex
             if (NavigationContext.QueryString.ContainsKey("token"))
             {
                 string token = NavigationContext.QueryString["token"];
-                TokenUtil.SaveTokenToIsolatedStorage(token);
+                TokenUtil.SaveToken(token);
 
                 if (!isInit)
                 {
@@ -43,6 +43,14 @@ namespace PmaDex
                     isInit = true;
                 }
             }
+
+            if (PhoneApplicationService.Current.State.ContainsKey("pmaActivity"))
+            {
+                PmaActivity pmaActivity = PhoneApplicationService.Current.State["pmaActivity"] as PmaActivity;
+                PhoneApplicationService.Current.State.Remove("pmaActivity");
+                lstActivitiesAdv.Items.Add(pmaActivity);
+            }
+
         }
 
         private async void loadProjects(string token)
@@ -61,27 +69,15 @@ namespace PmaDex
                 return;
             }
 
-            string token = TokenUtil.GetTokenFromIsolatedStorage();
+            string token = TokenUtil.GetToken();
 
             string id = pmaProject.Id;
             PmaServices pmaServices = new PmaServices();
             List<PmaActivity> activities = await pmaServices.loadActivities(token, id);
 
             this.lpkActivities.ItemsSource = activities.ToArray();
-
-
         }
         
-        private string getMinutes()
-        {
-            DateTime effortDt = (DateTime)tpkEffort.Value;
-            DateTime baseDt = new DateTime(effortDt.Year, effortDt.Month, effortDt.Day, 0, 0, 0, 0, effortDt.Kind);
-            string minutes = (effortDt.Subtract(baseDt).TotalMinutes).ToString();
-            return minutes;
-        }
-
-        
-
         private void setProgressIndicator(bool value)
         {
             SystemTray.ProgressIndicator.IsIndeterminate = value;
@@ -91,7 +87,7 @@ namespace PmaDex
         
         private void btnSave_Click(object sender, EventArgs e)
         {
-            string token = TokenUtil.GetTokenFromIsolatedStorage();
+            string token = TokenUtil.GetToken();
 
             var item = lpkActivities.SelectedItem;
             PmaActivity pmaActivity = (PmaActivity)item;
@@ -108,13 +104,12 @@ namespace PmaDex
             //DateTime date1 = new DateTime(0, 1, 1, 22, 59, 0);
             //DateTime date2 = new DateTime(0, 1, 1, 22, 59, 0);
             //TimeSpan ts = new TimeSpan(10, 30, 0);
-            string day = String.Format("{0:yyyy-MM-dd}", dpkDate.Value);
-
-            string minutes = getMinutes();
+            string day = dpkDate.FormatToDiaMesAno();
+            string effortInMinutes = tpkEffort.GetEffortInMinutes();
 
             PmaServices pmaServices = new PmaServices();
             pmaServices.CreateTheOneAppointment(token, day, tpkStartHour.ValueString, tpkEndHour.ValueString,
-                tpkRest.ValueString, minutes, pmaActivity.id);
+                tpkRest.ValueString, effortInMinutes, pmaActivity.id);
         }
 
         private void btnList_Click(object sender, EventArgs e)
@@ -150,7 +145,6 @@ namespace PmaDex
             TimeSpan effort = endHour.Subtract(startHour);
             effort = effort.Subtract(new TimeSpan(rest.Hour, rest.Minute, 0));
 
-            //this.txtEffortTip.Text = effort.ToString();
             DateTime effortDate = (DateTime)tpkEffort.Value;
             DateTime dateOnly = effortDate.Date;
             DateTime date = dateOnly + effort;
@@ -218,9 +212,31 @@ namespace PmaDex
 
         }
 
-        private void btnSaveAdv_Click(object sender, EventArgs e)
+        private async void btnSaveAdv_Click(object sender, EventArgs e)
         {
 
+            //criar CreateDayAppointment e salvar
+            //criar CreateDayAppointment para cada atividade da lista
+
+
+            //TODO validar se tem atividades adicionadas
+            PmaServices pmaServices = new PmaServices();
+            string response = await pmaServices.createDayAppointment(TokenUtil.GetToken(), dpkDateAdv.FormatToDiaMesAno(), tpkStartHourAdv.ValueString, tpkEndHourAdv.ValueString, tpkRestAdv.ValueString);
+            //TODO tratar response
+
+            lstActivitiesAdv.Items.ToList().ForEach(async x =>
+            {
+                var atividade = x as PmaActivity;
+                response = await pmaServices.CreateAppointment(TokenUtil.GetToken(), dpkDateAdv.FormatToDiaMesAno(), atividade.id, atividade.Effort, atividade.Descricao);
+                //TODO tratar response
+            });
+
+            //foreach (object o in lstActivitiesAdv.Items)
+            //{
+            //    if(o is PmaActivity) 
+            //    {
+            //    }
+            //}
         }
 
         private void btnConfigAdv_Click(object sender, EventArgs e)

@@ -126,7 +126,7 @@ namespace PmaDex
         //
         //Parameters: token, data(yyyy-mm-dd), inicio(HH:MM), intervalo(HH:MM), fim(HH:MM) 
         //
-        private async Task<string> createDayAppointment(string token, string day, string startHour, string endHour, string restHour)
+        public async Task<string> createDayAppointment(string token, string day, string startHour, string endHour, string restHour)
         {
             var values = new List<KeyValuePair<string, string>> { 
                 new KeyValuePair<string, string>("token", token), 
@@ -148,6 +148,11 @@ namespace PmaDex
         private async Task<string> CreateAppointment(string token, string day, string idActivity, string effort)
         {
             string description = IsolatedStorageSettings.ApplicationSettings["description"] as string;
+            return await CreateAppointment(token, day, idActivity, effort, description);
+        }
+
+        public async Task<string> CreateAppointment(string token, string day, string idActivity, string effort, string description)
+        {
             var values = new List<KeyValuePair<string, string>> { 
                 new KeyValuePair<string, string>("token", token), 
                 new KeyValuePair<string, string>("data", day),
