@@ -136,12 +136,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AppResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="SampleData\SampleDataAddButton\SampleDataAddButton.xaml.cs">
-      <DependentUpon>SampleDataAddButton.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="SampleData\SampleDataSource\SampleDataSource.xaml.cs">
-      <DependentUpon>SampleDataSource.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Util\DateUtil.cs" />
     <Compile Include="Util\TokenUtil.cs" />
     <Compile Include="ViewAppointmentPage.xaml.cs">
@@ -181,14 +175,6 @@
     <Page Include="Pages\ConfigLoginPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="SampleData\SampleDataAddButton\SampleDataAddButton.xaml">
-      <Generator>MSBuild:MarkupCompilePass1</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="SampleData\SampleDataSource\SampleDataSource.xaml">
-      <Generator>MSBuild:MarkupCompilePass1</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="ViewAppointmentPage.xaml">
       <SubType>Designer</SubType>
@@ -243,7 +229,6 @@
     <Content Include="Images\refresh.png" />
     <Content Include="Images\save.png" />
     <Content Include="README_FIRST.txt" />
-    <Content Include="SampleData\MainViewModelSampleData.xml" />
     <Content Include="Toolkit.Content\ApplicationBar.Add.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Cancel.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Check.png" />
@@ -272,36 +257,6 @@
     <Reference Include="System.Net.Http.Primitives">
       <HintPath>..\packages\Microsoft.Net.Http.2.2.22\lib\sl4-windowsphone71\System.Net.Http.Primitives.dll</HintPath>
     </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <DesignTimeOnly Include="SampleData\SampleDataSource\SampleDataSource.xsd" />
-  </ItemGroup>
-  <ItemGroup>
-    <DesignTimeOnly Include="SampleData\SampleDataAddButton\SampleDataAddButton.xsd" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="SampleData\SampleDataAddButton\SampleDataAddButton_Files\add.png" />
-    <Resource Include="SampleData\SampleDataAddButton\SampleDataAddButton_Files\ApplicationBar.Add.png" />
-    <Resource Include="SampleData\SampleDataAddButton\SampleDataAddButton_Files\image01.png" />
-    <Resource Include="SampleData\SampleDataAddButton\SampleDataAddButton_Files\image02.png" />
-    <Resource Include="SampleData\SampleDataAddButton\SampleDataAddButton_Files\image03.png" />
-    <Resource Include="SampleData\SampleDataAddButton\SampleDataAddButton_Files\image04.png" />
-    <Resource Include="SampleData\SampleDataAddButton\SampleDataAddButton_Files\image05.png" />
-    <Resource Include="SampleData\SampleDataSource\SampleDataSource_Files\add.png" />
-    <Resource Include="SampleData\SampleDataSource\SampleDataSource_Files\delete.png" />
-    <Resource Include="SampleData\SampleDataSource\SampleDataSource_Files\edit.png" />
-    <Resource Include="SampleData\SampleDataSource\SampleDataSource_Files\favs.addto.png" />
-    <Resource Include="SampleData\SampleDataSource\SampleDataSource_Files\favs.png" />
-    <Resource Include="SampleData\SampleDataSource\SampleDataSource_Files\feature.calendar.png" />
-    <Resource Include="SampleData\SampleDataSource\SampleDataSource_Files\feature.search.png" />
-    <Resource Include="SampleData\SampleDataSource\SampleDataSource_Files\feature.settings.png" />
-    <Resource Include="SampleData\SampleDataSource\SampleDataSource_Files\image01.png" />
-    <Resource Include="SampleData\SampleDataSource\SampleDataSource_Files\image02.png" />
-    <Resource Include="SampleData\SampleDataSource\SampleDataSource_Files\image03.png" />
-    <Resource Include="SampleData\SampleDataSource\SampleDataSource_Files\image04.png" />
-    <Resource Include="SampleData\SampleDataSource\SampleDataSource_Files\image05.png" />
-    <Resource Include="SampleData\SampleDataSource\SampleDataSource_Files\refresh.png" />
-    <Resource Include="SampleData\SampleDataSource\SampleDataSource_Files\save.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />
