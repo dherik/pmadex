@@ -97,13 +97,6 @@ namespace PmaDex
                 return;
             }
 
-            //DateTime startDate = DateTime.Now;
-            //String effort = ((DateTime)tpkEffort.Value).Hour.ToString() + ":" + ((DateTime)tpkEffort.Value).Minute.ToString();
-            //String effort = String.Format("{0:HH mm}", (DateTime)tpkEffort.Value);
-            //string minutes = (date2.Subtract(date1).TotalMinutes).ToString();
-            //DateTime date1 = new DateTime(0, 1, 1, 22, 59, 0);
-            //DateTime date2 = new DateTime(0, 1, 1, 22, 59, 0);
-            //TimeSpan ts = new TimeSpan(10, 30, 0);
             string day = dpkDate.FormatToDiaMesAno();
             string effortInMinutes = tpkEffort.GetEffortInMinutes();
 
