@@ -56,8 +56,22 @@ namespace PmaDex
 
             Dispatcher.BeginInvoke(() =>
             {
-                PhoneApplicationService.Current.State.Remove("pmaActivity");
-                PhoneApplicationService.Current.State["pmaActivity"] = pmaActivity;
+
+                List<PmaActivity> activities;
+                if (PhoneApplicationService.Current.State.ContainsKey("pmaActivities")) 
+                {
+                    activities = PhoneApplicationService.Current.State["pmaActivities"] as List<PmaActivity>;
+                }
+                else
+                {
+                    activities = new List<PmaActivity>();
+                }
+
+                activities.Add(pmaActivity);
+                PhoneApplicationService.Current.State["pmaActivities"] = activities;
+
+                //PhoneApplicationService.Current.State.Remove("pmaActivity");
+                //PhoneApplicationService.Current.State["pmaActivity"] = pmaActivity;
                 NavigationService.Navigate(new Uri("/MenuPage.xaml", UriKind.Relative));
             });
         }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PmaDex
 {
-    class PmaActivity
+    public class PmaActivity
     {
         public string id { get; set; }
         public string nomeAtividade { get; set; }

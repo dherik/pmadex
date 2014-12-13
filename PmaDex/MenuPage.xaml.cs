@@ -16,16 +16,18 @@ using PmaDex.Util;
 
 namespace PmaDex
 {
-    public partial class OptionsPage : PhoneApplicationPage
+    public partial class MenuPage : PhoneApplicationPage
     {
+        //public ObservableCollection<PmaActivity> ListActivitiesAdvanced { get; set; }
 
         ProgressIndicator progressIndicator = new ProgressIndicator() { IsVisible = true, IsIndeterminate = false, Text = "Consultando..." };
 
         private bool isInit { get; set; }
 
-        public OptionsPage()
+        public MenuPage()
         {
             InitializeComponent();
+            //ListActivitiesAdvanced = new ObservableCollection<PmaActivity>();
             isInit = false;
         }
 
@@ -44,11 +46,11 @@ namespace PmaDex
                 }
             }
 
-            if (PhoneApplicationService.Current.State.ContainsKey("pmaActivity"))
+            if (PhoneApplicationService.Current.State.ContainsKey("pmaActivities"))
             {
-                PmaActivity pmaActivity = PhoneApplicationService.Current.State["pmaActivity"] as PmaActivity;
-                PhoneApplicationService.Current.State.Remove("pmaActivity");
-                lstActivitiesAdv.Items.Add(pmaActivity);
+                List<PmaActivity> activities = PhoneApplicationService.Current.State["pmaActivities"] as List<PmaActivity>;
+                //PhoneApplicationService.Current.State.Remove("pmaActivities");
+                ListActivitiesAdvanced.ItemsSource = activities;
             }
 
         }
@@ -217,12 +219,11 @@ namespace PmaDex
             string response = await pmaServices.createDayAppointment(TokenUtil.GetToken(), dpkDateAdv.FormatToDiaMesAno(), tpkStartHourAdv.ValueString, tpkEndHourAdv.ValueString, tpkRestAdv.ValueString);
             //TODO tratar response
 
-            lstActivitiesAdv.Items.ToList().ForEach(async x =>
-            {
-                var atividade = x as PmaActivity;
-                response = await pmaServices.CreateAppointment(TokenUtil.GetToken(), dpkDateAdv.FormatToDiaMesAno(), atividade.id, atividade.Effort, atividade.Descricao);
+            //foreach (var atividade in ListActivitiesAdvanced)
+            //{
+                //response = await pmaServices.CreateAppointment(TokenUtil.GetToken(), dpkDateAdv.FormatToDiaMesAno(), atividade.id, atividade.Effort, atividade.Descricao);
                 //TODO tratar response
-            });
+            //}
 
             //foreach (object o in lstActivitiesAdv.Items)
             //{
@@ -256,4 +257,5 @@ namespace PmaDex
         }
 
     }
+
 }

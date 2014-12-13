@@ -6,7 +6,7 @@
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    x:Class="PmaDex.OptionsPage"
+    x:Class="PmaDex.MenuPage"
     mc:Ignorable="d"
     SupportedOrientations="PortraitOrLandscape"  Orientation="Portrait"
     xmlns:converter="clr-namespace:PmaDex.Converter"
@@ -209,19 +209,22 @@
 							x:Name="tpkRestAdv" 
 							Value="01:00"/>
 					</StackPanel>
+                    
+                    
 
 					<StackPanel Grid.Row="1" Margin="12,0,12,0">
-                        <TextBlock 
-                            Visibility="{Binding Path=lstActivitiesAdv, Converter={StaticResource ListLengthVisibilityConverter}, 
+
+                        <!--<TextBlock 
+                            Visibility="{Binding Path=ListActivitiesAdvanced, Converter={StaticResource ListLengthVisibilityConverter}, 
                             ConverterParameter=false}"
                             HorizontalAlignment="Left" 
 							Text="Sem atividades" 
-							Margin="12,0,12,0" Style="{StaticResource PhoneTextGroupHeaderStyle}"/>
-
-                        <ListBox x:Name="lstActivitiesAdv"
-                                    Margin="0,0,12,0"
-                                    Visibility="{Binding Path=lstActivitiesAdv, Converter={StaticResource ListLengthVisibilityConverter}, 
-                                    ConverterParameter=true}">
+							Margin="12,0,12,0" Style="{StaticResource PhoneTextGroupHeaderStyle}">
+                        </TextBlock>-->
+                        
+                        <ListBox x:Name="ListActivitiesAdvanced" Margin="0,0,12,0"
+                                 Visibility="{Binding Path=ListActivitiesAdvanced, Converter={StaticResource ListLengthVisibilityConverter}, 
+                            ConverterParameter=true}">
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal" Height="105" >
