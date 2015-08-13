@@ -10,25 +10,25 @@ using System.Xml.Linq;
 
 namespace PmaDex
 {
-    class PmaServices
+    public class PmaServices
     {
 
-        private const string urlListarProjetos = "https://dextranet.dextra.com.br/pma/services/listar_projetos";
-        private const string urlLogin = "https://dextranet.dextra.com.br/pma/services/obter_token";
-        private const string urlListarAtividades = "https://dextranet.dextra.com.br/pma/services/listar_atividades";
-        private const string urlCriarApontamentoDiario = "https://dextranet.dextra.com.br/pma/services/criar_apontamento_diario";
-        private const string urlCriarApontamento = "https://dextranet.dextra.com.br/pma/services/criar_apontamento";
-        private const string urlListarApontamentosDiarios = "https://dextranet.dextra.com.br/pma/services/listar_apontamentos_diarios";
-        private const string urlListarApontamentos = "https://dextranet.dextra.com.br/pma/services/listar_apontamentos";
-        //https://dextranet.dextra.com.br/pma/registros/destroy?atividade=6827&data=2014-07-29
-        //https://dextranet.dextra.com.br/pma/registros/destroy_ad/138159
+        private const string UrlListarProjetos = "https://dextranet.dextra.com.br/pma/services/listar_projetos";
+        private const string UrlLogin = "https://dextranet.dextra.com.br/pma/services/obter_token";
+        private const string UrlListarAtividades = "https://dextranet.dextra.com.br/pma/services/listar_atividades";
+        private const string UrlCriarApontamentoDiario = "https://dextranet.dextra.com.br/pma/services/criar_apontamento_diario";
+        private const string UrlCriarApontamento = "https://dextranet.dextra.com.br/pma/services/criar_apontamento";
+        private const string UrlListarApontamentosDiarios = "https://dextranet.dextra.com.br/pma/services/listar_apontamentos_diarios";
+        private const string UrlListarApontamentos = "https://dextranet.dextra.com.br/pma/services/listar_apontamentos";
+        // https://dextranet.dextra.com.br/pma/registros/destroy?atividade=6827&data=2014-07-29
+        // https://dextranet.dextra.com.br/pma/registros/destroy_ad/138159
 
 
-        public async Task<List<PmaProject>> loadProjects(string token)
+        public async Task<List<PmaProject>> LoadProjects(string token)
         {
             var values = new List<KeyValuePair<string, string>> { new KeyValuePair<string, string>("token", token) };
             var httpClient = new HttpClient(new HttpClientHandler());
-            HttpResponseMessage response = await httpClient.PostAsync(urlListarProjetos, new FormUrlEncodedContent(values));
+            HttpResponseMessage response = await httpClient.PostAsync(UrlListarProjetos, new FormUrlEncodedContent(values));
             response.EnsureSuccessStatusCode();
             var responseString = await response.Content.ReadAsStringAsync();
 
@@ -37,36 +37,41 @@ namespace PmaDex
             return projectsList;
         }
 
-        public async Task<string> login(string username, string password)
+        public async Task<string> Login(string username, string password)
         {
             var values = new List<KeyValuePair<string, string>> { 
                 new KeyValuePair<string, string>("username", username), 
                 new KeyValuePair<string, string>("password", password) 
             };
             var httpClient = new HttpClient(new HttpClientHandler());
-            HttpResponseMessage response = await httpClient.PostAsync(urlLogin, new FormUrlEncodedContent(values));
+            HttpResponseMessage response = await httpClient.PostAsync(UrlLogin, new FormUrlEncodedContent(values));
             response.EnsureSuccessStatusCode();
             var responseString = await response.Content.ReadAsStringAsync();
             return responseString;
         }
 
-        public async Task<List<PmaActivity>> loadActivities(string token, string idProject)
+        public async Task<List<PmaActivity>> LoadActivities(string token, string idProject)
         {
             var values = new List<KeyValuePair<string, string>> { 
                 new KeyValuePair<string, string>("token", token), 
                 new KeyValuePair<string, string>("projeto", idProject) 
             };
             var httpClient = new HttpClient(new HttpClientHandler());
-            HttpResponseMessage response = await httpClient.PostAsync(urlListarAtividades, new FormUrlEncodedContent(values));
+            HttpResponseMessage response = await httpClient.PostAsync(UrlListarAtividades, new FormUrlEncodedContent(values));
             response.EnsureSuccessStatusCode();
             var responseString = await response.Content.ReadAsStringAsync();
 
-            List<PmaActivity> activities = hidrateListPmaActivity(responseString);
+            List<PmaActivity> activities = HidrateListPmaActivity(responseString);
 
             return activities;
         }
 
-        private static List<PmaActivity> hidrateListPmaActivity(string response)
+        private static List<PmaActivity> HidrateListPmaActivity(string response)
+        {
+            return ExtractActivitiesFromResponse(response);
+        }
+
+        private static List<PmaActivity> ExtractActivitiesFromResponse(string response)
         {
             List<PmaActivity> activities = new List<PmaActivity>();
             XDocument entry = XDocument.Parse(response);
@@ -74,13 +79,13 @@ namespace PmaDex
             {
                 activities.Add(new PmaActivity
                 {
-                    id = (string)xe.Element("id"),
-                    nomeAtividade = (string)xe.Element("nome"),
-                    nomeCliente = (string)xe.Element("cliente"),
-                    nomeProjeto = (string)xe.Element("projeto")
+                    Id = (string)xe.Element("id"),
+                    NomeAtividade = (string)xe.Element("nome"),
+                    NomeCliente = (string)xe.Element("cliente"),
+                    NomeProjeto = (string)xe.Element("projeto")
                 });
             });
-            activities.OrderBy(pmaActivity => pmaActivity.nomeAtividade);
+            activities.OrderBy(pmaActivity => pmaActivity.NomeAtividade);
             return activities;
         }
 
@@ -94,7 +99,7 @@ namespace PmaDex
             {
                 projects.Add(new PmaProject
                 {
-                    Id = (string) xe.Element("id"),
+                    Id = (string)xe.Element("id"),
                     NomeCliente = (string)xe.Element("cliente"),
                     NomeProjeto = (string)xe.Element("nome")
                 });
@@ -107,26 +112,25 @@ namespace PmaDex
 
         public async void CreateTheOneAppointment(string token, string day, string startHour, string endHour, string restHour, string effort, string idActivity)
         {
-            string response = await createDayAppointment(token, day, startHour, endHour, restHour);
-            if (PmaXmlParser.isError(response))
+            string response = await this.CreateDayAppointment(token, day, startHour, endHour, restHour);
+            if (PmaXmlParser.IsError(response))
             {
-                MessageBox.Show("Erro ao criar apontamento diário. Motivo: " + PmaXmlParser.getErrorMessage(response));
+                MessageBox.Show("Erro ao criar apontamento diário. Motivo: " + PmaXmlParser.GetErrorMessage(response));
                 return;
             }
 
-            response = await CreateAppointment(token, day, idActivity, effort);
-            if (PmaXmlParser.isError(response))
+            response = await this.CreateAppointment(token, day, idActivity, effort);
+            if (PmaXmlParser.IsError(response))
             {
-                MessageBox.Show("Erro ao criar apontamento para atividade. Motivo: " + PmaXmlParser.getErrorMessage(response));
+                MessageBox.Show("Erro ao criar apontamento para atividade. Motivo: " + PmaXmlParser.GetErrorMessage(response));
                 return;
             }
+
             MessageBox.Show("Apontamento criado com sucesso!");
         }
 
-        //
-        //Parameters: token, data(yyyy-mm-dd), inicio(HH:MM), intervalo(HH:MM), fim(HH:MM) 
-        //
-        public async Task<string> createDayAppointment(string token, string day, string startHour, string endHour, string restHour)
+        // Parameters: token, data(yyyy-mm-dd), inicio(HH:MM), intervalo(HH:MM), fim(HH:MM) 
+        public async Task<string> CreateDayAppointment(string token, string day, string startHour, string endHour, string restHour)
         {
             var values = new List<KeyValuePair<string, string>> { 
                 new KeyValuePair<string, string>("token", token), 
@@ -136,7 +140,7 @@ namespace PmaDex
                 new KeyValuePair<string, string>("fim", endHour)
             };
             var httpClient = new HttpClient(new HttpClientHandler());
-            HttpResponseMessage response = await httpClient.PostAsync(urlCriarApontamentoDiario, new FormUrlEncodedContent(values));
+            HttpResponseMessage response = await httpClient.PostAsync(UrlCriarApontamentoDiario, new FormUrlEncodedContent(values));
             response.EnsureSuccessStatusCode();
             var responseString = await response.Content.ReadAsStringAsync();
 
@@ -144,11 +148,11 @@ namespace PmaDex
 
         }
 
-        //token, data(yyyy-mm-dd), atividadeId, atividadeStatus("working" ou "concluded"), esforco(min), descricao 
+        // token, data(yyyy-mm-dd), atividadeId, atividadeStatus("working" ou "concluded"), esforco(min), descricao 
         private async Task<string> CreateAppointment(string token, string day, string idActivity, string effort)
         {
             string description = IsolatedStorageSettings.ApplicationSettings["description"] as string;
-            return await CreateAppointment(token, day, idActivity, effort, description);
+            return await this.CreateAppointment(token, day, idActivity, effort, description);
         }
 
         public async Task<string> CreateAppointment(string token, string day, string idActivity, string effort, string description)
@@ -162,20 +166,20 @@ namespace PmaDex
                 new KeyValuePair<string, string>("descricao", description)
             };
             var httpClient = new HttpClient(new HttpClientHandler());
-            HttpResponseMessage response = await httpClient.PostAsync(urlCriarApontamento, new FormUrlEncodedContent(values));
+            HttpResponseMessage response = await httpClient.PostAsync(UrlCriarApontamento, new FormUrlEncodedContent(values));
             response.EnsureSuccessStatusCode();
             var responseString = await response.Content.ReadAsStringAsync();
 
             return responseString;
         }
 
-        public void findDailyAppointments()
+        public void FindDailyAppointments()
         {
 
         }
 
         // token, dataInicial(yyyy-mm-dd), dataFinal(yyyy-mm-dd) 
-        public async Task<List<DailyAppointment>> findDailyAppointments(string token, string startDate, string endDate)
+        public async Task<List<DailyAppointment>> FindDailyAppointments(string token, string startDate, string endDate)
         {
             var values = new List<KeyValuePair<string, string>> { 
                 new KeyValuePair<string, string>("token", token), 
@@ -184,22 +188,28 @@ namespace PmaDex
             };
 
             var httpClient = new HttpClient(new HttpClientHandler());
-            HttpResponseMessage response = await httpClient.PostAsync(urlListarApontamentosDiarios, new FormUrlEncodedContent(values));
+            HttpResponseMessage response = await httpClient.PostAsync(UrlListarApontamentosDiarios, new FormUrlEncodedContent(values));
             response.EnsureSuccessStatusCode();
             var responseString = await response.Content.ReadAsStringAsync();
 
-            List<DailyAppointment> list = hidrateListDailyAppointment(responseString);
+            List<DailyAppointment> list = this.HidrateListDailyAppointment(responseString);
             return list;
 
         }
 
-        private List<DailyAppointment> hidrateListDailyAppointment(string response)
+        private List<DailyAppointment> HidrateListDailyAppointment(string response)
         {
-            XDocument entry = XDocument.Parse(response);
+            return ExtractDailyAppointmentsFromResponse(response);
+        }
+
+        private static List<DailyAppointment> ExtractDailyAppointmentsFromResponse(string response)
+        {
             List<DailyAppointment> dailyAppointments = new List<DailyAppointment>();
 
-            entry.Descendants("apontamentoDiario").ToList().ForEach(xe => {
-                dailyAppointments.Add(new DailyAppointment 
+            XDocument entry = XDocument.Parse(response);
+            entry.Descendants("apontamentoDiario").ToList().ForEach(xe =>
+            {
+                dailyAppointments.Add(new DailyAppointment
                 {
                     Data = (string)xe.Element("data"),
                     Inicio = (string)xe.Element("inicio"),
@@ -207,14 +217,11 @@ namespace PmaDex
                     Intervalo = (string)xe.Element("intervalo")
                 });
             });
-
-            //projects.OrderBy(pmaProject => pmaProject.data);
             return dailyAppointments;
-
         }
 
-        //token, data(yyyy-mm-dd) 
-        public async Task<List<Appointment>> findAppointments(string token, string data)
+        // token, data(yyyy-mm-dd) 
+        public async Task<List<Appointment>> FindAppointments(string token, string data)
         {
             var values = new List<KeyValuePair<string, string>> { 
                 new KeyValuePair<string, string>("token", token), 
@@ -222,15 +229,15 @@ namespace PmaDex
             };
 
             var httpClient = new HttpClient(new HttpClientHandler());
-            HttpResponseMessage response = await httpClient.PostAsync(urlListarApontamentos, new FormUrlEncodedContent(values));
+            HttpResponseMessage response = await httpClient.PostAsync(UrlListarApontamentos, new FormUrlEncodedContent(values));
             response.EnsureSuccessStatusCode();
             var responseString = await response.Content.ReadAsStringAsync();
 
-            List<Appointment> list = hidrateListAppointment(responseString);
+            List<Appointment> list = this.HidrateListAppointment(responseString);
             return list;
         }
 
-        private List<Appointment> hidrateListAppointment(string response)
+        private List<Appointment> HidrateListAppointment(string response)
         {
             XDocument entry = XDocument.Parse(response);
             List<Appointment> appointments = new List<Appointment>();

@@ -1,27 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Navigation;
-using Microsoft.Phone.Controls;
-using Microsoft.Phone.Shell;
-using System.IO.IsolatedStorage;
-
-namespace PmaDex.Pages
+﻿namespace PmaDex.Pages
 {
+    using Microsoft.Phone.Controls;
+    using System;
+    using System.Windows;
+    using System.IO.IsolatedStorage;
+
     public partial class ConfigAppointmentPage : PhoneApplicationPage
     {
         public ConfigAppointmentPage()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
+        private void BtnSave_Click(object sender, EventArgs e)
         {
-
-            if (this.txtboxDescription.Text == "")
+            if (this.txtboxDescription.Text == string.Empty)
             {
                 MessageBox.Show("Descrição não estar vazia");
             }

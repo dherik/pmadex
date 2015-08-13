@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Navigation;
-using Microsoft.Phone.Controls;
-using Microsoft.Phone.Shell;
-using System.IO.IsolatedStorage;
-
-namespace PmaDex.Pages
+﻿namespace PmaDex.Pages
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Net;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Navigation;
+    using Microsoft.Phone.Controls;
+    using Microsoft.Phone.Shell;
+    using System.IO.IsolatedStorage;
+
     public partial class ConfigLoginPage : PhoneApplicationPage
     {
         public ConfigLoginPage()
@@ -18,7 +18,7 @@ namespace PmaDex.Pages
             InitializeComponent();
 
             IsolatedStorageSettings settings = IsolatedStorageSettings.ApplicationSettings;
-            Boolean saveLogin = (bool)settings["saveLogin"];
+            bool saveLogin = (bool)settings["saveLogin"];
             this.togSaveLogin.IsChecked = saveLogin;
         }
 

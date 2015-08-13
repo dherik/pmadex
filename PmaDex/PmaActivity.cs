@@ -8,10 +8,14 @@ namespace PmaDex
 {
     public class PmaActivity
     {
-        public string id { get; set; }
-        public string nomeAtividade { get; set; }
-        public string nomeProjeto { get; set; }
-        public string nomeCliente { get; set; }
+        public string Id { get; set; }
+
+        public string NomeAtividade { get; set; }
+
+        public string NomeProjeto { get; set; }
+
+        public string NomeCliente { get; set; }
+
         public string Effort { get; set; }
 
         public string Descricao { get; set; }

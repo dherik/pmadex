@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 
 namespace PmaDex
 {
-    class PmaProject
+    public class PmaProject
     {
         public string Id { get; set; }
+
         public string NomeProjeto { get; set; }
+
         public string NomeCliente { get; set; }
     }
 }

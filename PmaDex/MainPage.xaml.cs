@@ -30,7 +30,7 @@ namespace PmaDex
             InitializeSettings();
 
             IsolatedStorageSettings settings = IsolatedStorageSettings.ApplicationSettings;
-            Boolean saveLogin = (bool)settings["saveLogin"];
+            bool saveLogin = (bool)settings["saveLogin"];
             if (saveLogin)
             {
                 this.user.Text = IsolatedStorageSettings.ApplicationSettings["user"] as string;
@@ -50,8 +50,8 @@ namespace PmaDex
 
             if (!IsolatedStorageSettings.ApplicationSettings.Contains("user") && !IsolatedStorageSettings.ApplicationSettings.Contains("password"))
             {
-                IsolatedStorageSettings.ApplicationSettings.Add("user", "");
-                IsolatedStorageSettings.ApplicationSettings.Add("password", "");
+                IsolatedStorageSettings.ApplicationSettings.Add("user", string.Empty);
+                IsolatedStorageSettings.ApplicationSettings.Add("password", string.Empty);
                 IsolatedStorageSettings.ApplicationSettings.Save();
             }
 
@@ -64,9 +64,9 @@ namespace PmaDex
 
         private async void Login_Click(object sender, RoutedEventArgs e)
         {
-            if (user.Text == "" || pwBox.Password == "") { MessageBox.Show("Preencha o usuário e a senha"); }
+            if (user.Text == string.Empty || pwBox.Password == string.Empty) { MessageBox.Show("Preencha o usuário e a senha"); }
 
-            bool isNetwork=NetworkInterface.GetIsNetworkAvailable();
+            bool isNetwork = NetworkInterface.GetIsNetworkAvailable();
             if (!isNetwork)
             {
                 MessageBox.Show("Sem acesso à internet");
@@ -76,9 +76,9 @@ namespace PmaDex
             SystemTray.SetProgressIndicator(this, progressIndicator);
             setProgressIndicator(true);
             PmaServices pmaServices = new PmaServices();
-            string response = await pmaServices.login(this.user.Text, this.pwBox.Password);
-            getToken(response);
-            if (!PmaXmlParser.isError(response))
+            string response = await pmaServices.Login(this.user.Text, this.pwBox.Password);
+            GetToken(response);
+            if (!PmaXmlParser.IsError(response))
             {
                 saveLoginCredentials(this.user.Text, this.pwBox.Password);
             }
@@ -89,7 +89,7 @@ namespace PmaDex
         private void saveLoginCredentials(string user, string password)
         {
             IsolatedStorageSettings settings = IsolatedStorageSettings.ApplicationSettings;
-            Boolean saveLogin = (bool)settings["saveLogin"];
+            bool saveLogin = (bool)settings["saveLogin"];
 
             if (saveLogin)
             {
@@ -107,13 +107,13 @@ namespace PmaDex
         }
 
 
-        private void getToken(string response)
+        private void GetToken(string response)
         {
             XDocument entry = XDocument.Parse(response);
-            if (PmaXmlParser.isError(response))
+            if (PmaXmlParser.IsError(response))
             {
-                //error
-                string errorMessage = PmaXmlParser.getErrorMessage(response);
+                // error
+                string errorMessage = PmaXmlParser.GetErrorMessage(response);
                 MessageBox.Show("Ocorreu uma falha na requisição: " + errorMessage != null ? errorMessage : "desconhecida");
                 return;
             }
@@ -123,11 +123,12 @@ namespace PmaDex
             {
                 Dispatcher.BeginInvoke(() =>
                 {
-                    NavigationService.Navigate(new Uri("/MenuPage.xaml?token="+token, UriKind.Relative));
+                    NavigationService.Navigate(new Uri("/MenuPage.xaml?token=" + token, UriKind.Relative));
                 });  
             }
             
         }
 
     }
+
 }

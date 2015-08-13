@@ -18,8 +18,6 @@ namespace PmaDex
 {
     public partial class MenuPage : PhoneApplicationPage
     {
-        //public ObservableCollection<PmaActivity> ListActivitiesAdvanced { get; set; }
-
         ProgressIndicator progressIndicator = new ProgressIndicator() { IsVisible = true, IsIndeterminate = false, Text = "Consultando..." };
 
         private bool isInit { get; set; }
@@ -27,7 +25,6 @@ namespace PmaDex
         public MenuPage()
         {
             InitializeComponent();
-            //ListActivitiesAdvanced = new ObservableCollection<PmaActivity>();
             isInit = false;
         }
 
@@ -40,7 +37,7 @@ namespace PmaDex
 
                 if (!isInit)
                 {
-                    loadProjects(token);
+                    LoadProjects(token);
                     this.dpkDate.Value = DateTime.Now;
                     isInit = true;
                 }
@@ -49,23 +46,22 @@ namespace PmaDex
             if (PhoneApplicationService.Current.State.ContainsKey("pmaActivities"))
             {
                 List<PmaActivity> activities = PhoneApplicationService.Current.State["pmaActivities"] as List<PmaActivity>;
-                //PhoneApplicationService.Current.State.Remove("pmaActivities");
                 ListActivitiesAdvanced.ItemsSource = activities;
             }
 
         }
 
-        private async void loadProjects(string token)
+        private async void LoadProjects(string token)
         {
             PmaServices pmaServices = new PmaServices();
-            List<PmaProject> projectsList = await pmaServices.loadProjects(token);
+            List<PmaProject> projectsList = await pmaServices.LoadProjects(token);
             this.lpkProjects.ItemsSource = projectsList.ToArray();
         }
 
-        private async void lpkProjects_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void LpkProjects_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var item = (sender as ListPicker).SelectedItem;
-            PmaProject pmaProject = (PmaProject) item;
+            PmaProject pmaProject = (PmaProject)item;
             if (pmaProject == null)
             {
                 return;
@@ -75,19 +71,19 @@ namespace PmaDex
 
             string id = pmaProject.Id;
             PmaServices pmaServices = new PmaServices();
-            List<PmaActivity> activities = await pmaServices.loadActivities(token, id);
+            List<PmaActivity> activities = await pmaServices.LoadActivities(token, id);
 
             this.lpkActivities.ItemsSource = activities.ToArray();
         }
         
-        private void setProgressIndicator(bool value)
+        private void SetProgressIndicator(bool value)
         {
             SystemTray.ProgressIndicator.IsIndeterminate = value;
             SystemTray.ProgressIndicator.IsVisible = value;
         }
 
         
-        private void btnSave_Click(object sender, EventArgs e)
+        private void BtnSave_Click(object sender, EventArgs e)
         {
             string token = TokenUtil.GetToken();
 
@@ -103,11 +99,16 @@ namespace PmaDex
             string effortInMinutes = tpkEffort.GetEffortInMinutes();
 
             PmaServices pmaServices = new PmaServices();
-            pmaServices.CreateTheOneAppointment(token, day, tpkStartHour.ValueString, tpkEndHour.ValueString,
-                tpkRest.ValueString, effortInMinutes, pmaActivity.id);
+            pmaServices.CreateTheOneAppointment(token, 
+                day, 
+                tpkStartHour.ValueString, 
+                tpkEndHour.ValueString,
+                tpkRest.ValueString, 
+                effortInMinutes, 
+                pmaActivity.Id);
         }
 
-        private void btnList_Click(object sender, EventArgs e)
+        private void BtnList_Click(object sender, EventArgs e)
         {
             GoToListAppointmentsPage();
         }
@@ -126,7 +127,7 @@ namespace PmaDex
             TimeSpan travelTime = arrival - departure;  
             Console.WriteLine("{0} - {1} = {2}", arrival, departure, travelTime);  
          */
-        private void calculateEffortTip()
+        private void CalculateEffortTip()
         {
 
             if (this.tpkStartHour == null || this.tpkEndHour == null || this.tpkRest == null)
@@ -146,22 +147,22 @@ namespace PmaDex
             this.tpkEffort.Value = date;
         }
 
-        private void tpkStartHour_ValueChanged(object sender, DateTimeValueChangedEventArgs e)
+        private void TpkStartHour_ValueChanged(object sender, DateTimeValueChangedEventArgs e)
         {
-            calculateEffortTip();
+            CalculateEffortTip();
         }
 
-        private void tpkEndHour_ValueChanged(object sender, DateTimeValueChangedEventArgs e)
+        private void TpkEndHour_ValueChanged(object sender, DateTimeValueChangedEventArgs e)
         {
-            calculateEffortTip();
+            CalculateEffortTip();
         }
 
-        private void tpkRest_ValueChanged(object sender, DateTimeValueChangedEventArgs e)
+        private void TpkRest_ValueChanged(object sender, DateTimeValueChangedEventArgs e)
         {
-            calculateEffortTip();
+            CalculateEffortTip();
         }
 
-        private void btnConfig_Click(object sender, EventArgs e)
+        private void BtnConfig_Click(object sender, EventArgs e)
         {
             GoToConfigPage();
         }
@@ -181,12 +182,12 @@ namespace PmaDex
             }
         }
 
-        private void btnListAdv_Click(object sender, EventArgs e)
+        private void BtnListAdv_Click(object sender, EventArgs e)
         {
             GoToListAppointmentsPage();
         }
 
-        private void btnAddAdv_Click(object sender, EventArgs e)
+        private void BtnAddAdv_Click(object sender, EventArgs e)
         {
             //List<Appointment> appointments = new List<Appointment>();
             //appointments.Add(new Appointment
@@ -207,7 +208,7 @@ namespace PmaDex
 
         }
 
-        private async void btnSaveAdv_Click(object sender, EventArgs e)
+        private async void BtnSaveAdv_Click(object sender, EventArgs e)
         {
 
             //criar CreateDayAppointment e salvar
@@ -216,7 +217,7 @@ namespace PmaDex
 
             //TODO validar se tem atividades adicionadas
             PmaServices pmaServices = new PmaServices();
-            string response = await pmaServices.createDayAppointment(TokenUtil.GetToken(), dpkDateAdv.FormatToDiaMesAno(), tpkStartHourAdv.ValueString, tpkEndHourAdv.ValueString, tpkRestAdv.ValueString);
+            string response = await pmaServices.CreateDayAppointment(TokenUtil.GetToken(), dpkDateAdv.FormatToDiaMesAno(), tpkStartHourAdv.ValueString, tpkEndHourAdv.ValueString, tpkRestAdv.ValueString);
             //TODO tratar response
 
             //foreach (var atividade in ListActivitiesAdvanced)
@@ -233,7 +234,7 @@ namespace PmaDex
             //}
         }
 
-        private void btnConfigAdv_Click(object sender, EventArgs e)
+        private void BtnConfigAdv_Click(object sender, EventArgs e)
         {
             GoToConfigPage();
         }
@@ -246,7 +247,7 @@ namespace PmaDex
             });
         }
 
-        private void llsActivityAppointment_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void LlsActivityAppointment_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }

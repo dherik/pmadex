@@ -43,7 +43,7 @@
 
             <phone:LongListSelector 
                         x:Name="llsDailyAppointment" 
-                        LayoutMode="List" Margin="0,150,0,0" SelectionChanged="llsDailyAppointment_SelectionChanged"
+                        LayoutMode="List" Margin="0,150,0,0" SelectionChanged="LlsDailyAppointment_SelectionChanged"
                         >
                 <phone:LongListSelector.ItemTemplate>
                     <DataTemplate>
@@ -67,7 +67,7 @@
 
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="true" IsMenuEnabled="false">
-            <shell:ApplicationBarIconButton  x:Name="btnFind" Click="btnFind_Click"
+            <shell:ApplicationBarIconButton  x:Name="btnFind" Click="PtnFind_Click"
                 IconUri="/Images/refresh.png" Text="Procurar"/>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>

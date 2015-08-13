@@ -34,7 +34,7 @@
                     x:Name="lpkProjects"
                     ItemsSource="{Binding projects, ElementName=this}"
                     Header="Projeto"
-                    SelectionChanged="lpkProjects_SelectionChanged">
+                    SelectionChanged="LpkProjects_SelectionChanged">
                     <toolkit:ListPicker.ItemTemplate>
                         <DataTemplate>
                             <StackPanel>
@@ -94,7 +94,7 @@
 
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="true" IsMenuEnabled="false">
-            <shell:ApplicationBarIconButton  x:Name="btnSave" Click="btnSave_Click"
+            <shell:ApplicationBarIconButton  x:Name="btnSave" Click="BtnSave_Click"
                 IconUri="/Images/save.png" Text="salvar"/>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>

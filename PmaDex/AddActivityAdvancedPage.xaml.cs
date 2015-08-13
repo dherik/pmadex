@@ -1,25 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Navigation;
-using Microsoft.Phone.Controls;
-using Microsoft.Phone.Shell;
-using PmaDex.Util;
-
-namespace PmaDex
+﻿namespace PmaDex
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Navigation;
+    using Microsoft.Phone.Controls;
+    using Microsoft.Phone.Shell;
+    using PmaDex.Util;
+
     public partial class AddActivityAdvancedPage : PhoneApplicationPage
     {
-
-        private bool isInit { get; set; }
-
         public AddActivityAdvancedPage()
         {
-            InitializeComponent();
-            isInit = false;
+            this.InitializeComponent();
+            this.IsInit = false;
+        }
+
+        private bool IsInit { get; set; }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            if (!this.IsInit)
+            {
+                this.LoadProjects(TokenUtil.GetToken());
+                this.IsInit = true;
+            }
         }
 
         private PmaActivity GetSelectedActivity()
@@ -30,15 +36,14 @@ namespace PmaDex
             {
                 return pmaActivity;
             }
+
             return null;
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
+        private void BtnSave_Click(object sender, EventArgs e)
         {
-
-            //TODO passar atividade para lista de atividade da tela anterior
-
-            var activity = GetSelectedActivity();
+            // TODO passar atividade para lista de atividade da tela anterior
+            var activity = this.GetSelectedActivity();
             if (activity == null)
             {
                 MessageBox.Show("Não foram encontradas atividades");
@@ -47,16 +52,15 @@ namespace PmaDex
 
             var pmaActivity = new PmaActivity
             {
-                id = activity.id,
-                nomeProjeto = activity.nomeProjeto,
-                nomeCliente = activity.nomeCliente,
+                Id = activity.Id,
+                NomeProjeto = activity.NomeProjeto,
+                NomeCliente = activity.NomeCliente,
                 Effort = tpkEffortAdv.GetEffortInMinutes(),
                 Descricao = txtboxDescription.Text
             };
 
             Dispatcher.BeginInvoke(() =>
             {
-
                 List<PmaActivity> activities;
                 if (PhoneApplicationService.Current.State.ContainsKey("pmaActivities")) 
                 {
@@ -70,16 +74,14 @@ namespace PmaDex
                 activities.Add(pmaActivity);
                 PhoneApplicationService.Current.State["pmaActivities"] = activities;
 
-                //PhoneApplicationService.Current.State.Remove("pmaActivity");
-                //PhoneApplicationService.Current.State["pmaActivity"] = pmaActivity;
                 NavigationService.Navigate(new Uri("/MenuPage.xaml", UriKind.Relative));
             });
         }
 
-        private async void lpkProjects_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void LpkProjects_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var item = (sender as ListPicker).SelectedItem;
-            PmaProject pmaProject = (PmaProject) item;
+            PmaProject pmaProject = (PmaProject)item;
             if (pmaProject == null)
             {
                 return;
@@ -89,24 +91,15 @@ namespace PmaDex
 
             string id = pmaProject.Id;
             PmaServices pmaServices = new PmaServices();
-            List<PmaActivity> activities = await pmaServices.loadActivities(token, id);
+            List<PmaActivity> activities = await pmaServices.LoadActivities(token, id);
 
             this.lpkActivities.ItemsSource = activities.ToArray();
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            if (!isInit)
-            {
-                loadProjects(TokenUtil.GetToken());
-                isInit = true;
-            }
-        }
-
-        private async void loadProjects(string token)
+        private async void LoadProjects(string token)
         {
             PmaServices pmaServices = new PmaServices();
-            List<PmaProject> projectsList = await pmaServices.loadProjects(token);
+            List<PmaProject> projectsList = await pmaServices.LoadProjects(token);
             this.lpkProjects.ItemsSource = projectsList.ToArray();
         }
     }

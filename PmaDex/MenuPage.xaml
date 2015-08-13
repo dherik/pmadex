@@ -18,23 +18,23 @@
         
         <shell:ApplicationBar x:Key="AppBarSimple" IsVisible="True" IsMenuEnabled="True">
             <shell:ApplicationBar.MenuItems>
-                <shell:ApplicationBarMenuItem  Click="btnConfig_Click" Text="Configurações"/>
+                <shell:ApplicationBarMenuItem  Click="BtnConfig_Click" Text="Configurações"/>
             </shell:ApplicationBar.MenuItems>
-        	<shell:ApplicationBarIconButton  x:Name="btnList" Click="btnList_Click"
+        	<shell:ApplicationBarIconButton  x:Name="btnList" Click="BtnList_Click"
         		IconUri="/Images/feature.search.png" Text="consultar"/>
-        	<shell:ApplicationBarIconButton  x:Name="btnSave" Click="btnSave_Click"
+        	<shell:ApplicationBarIconButton  x:Name="btnSave" Click="BtnSave_Click"
         		IconUri="/Images/save.png" Text="salvar"/>
         </shell:ApplicationBar>
 
         <shell:ApplicationBar x:Key="AppBarAdvanced" IsVisible="True" IsMenuEnabled="True">
             <shell:ApplicationBar.MenuItems>
-                <shell:ApplicationBarMenuItem  Click="btnConfigAdv_Click" Text="Configurações"/>
+                <shell:ApplicationBarMenuItem  Click="BtnConfigAdv_Click" Text="Configurações"/>
             </shell:ApplicationBar.MenuItems>
-        	<shell:ApplicationBarIconButton  x:Name="btnListAdv" Click="btnListAdv_Click"
+        	<shell:ApplicationBarIconButton  x:Name="btnListAdv" Click="BtnListAdv_Click"
         		IconUri="/Images/feature.search.png" Text="consultar"/>
-        	<shell:ApplicationBarIconButton  x:Name="btnAddAdv" Click="btnAddAdv_Click"
+        	<shell:ApplicationBarIconButton  x:Name="btnAddAdv" Click="BtnAddAdv_Click"
         		IconUri="/Images/add.png" Text="atividade"/>
-        	<shell:ApplicationBarIconButton  x:Name="btnSaveAdv" Click="btnSaveAdv_Click"
+        	<shell:ApplicationBarIconButton  x:Name="btnSaveAdv" Click="BtnSaveAdv_Click"
         		IconUri="/Images/save.png" Text="salvar"/>
         </shell:ApplicationBar>
         
@@ -98,7 +98,7 @@
 								Width="140"
 								x:Name="tpkStartHour" 
 								Value="08:00"
-								ValueChanged="tpkStartHour_ValueChanged"/>
+								ValueChanged="TpkStartHour_ValueChanged"/>
                         
 							<toolkit:TimePicker 
 								Header="Fim" 
@@ -106,11 +106,11 @@
 								Width="140"
 								x:Name="tpkEndHour" 
 								Value="17:00"
-								ValueChanged="tpkEndHour_ValueChanged"/>
+								ValueChanged="TpkEndHour_ValueChanged"/>
                         
 							<toolkit:TimePicker 
 								Header="Intervalo"
-								ValueChanged="tpkRest_ValueChanged"
+								ValueChanged="TpkRest_ValueChanged"
 								ValueStringFormat="{}{0:H:mm}"
 								Width="140"
 								x:Name="tpkRest" 
@@ -121,7 +121,7 @@
 								x:Name="lpkProjects"
 								ItemsSource="{Binding projects, ElementName=this}"
 								Header="Projeto"
-								SelectionChanged="lpkProjects_SelectionChanged">
+								SelectionChanged="LpkProjects_SelectionChanged">
 								<toolkit:ListPicker.ItemTemplate>
 									<DataTemplate>
 										<StackPanel>
@@ -191,7 +191,7 @@
 							Width="140"
 							x:Name="tpkStartHourAdv" 
 							Value="08:00"
-							ValueChanged="tpkStartHour_ValueChanged"/>
+							ValueChanged="TpkStartHour_ValueChanged"/>
 
 						<toolkit:TimePicker 
 							Header="Fim" 
@@ -199,11 +199,11 @@
 							Width="140"
 							x:Name="tpkEndHourAdv" 
 							Value="17:00"
-							ValueChanged="tpkEndHour_ValueChanged"/>
+							ValueChanged="TpkEndHour_ValueChanged"/>
 
 						<toolkit:TimePicker 
 							Header="Intervalo"
-							ValueChanged="tpkRest_ValueChanged"
+							ValueChanged="TpkRest_ValueChanged"
 							ValueStringFormat="{}{0:H:mm}"
 							Width="140"
 							x:Name="tpkRestAdv" 

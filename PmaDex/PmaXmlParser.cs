@@ -7,21 +7,21 @@ using System.Xml.Linq;
 
 namespace PmaDex
 {
-    class PmaXmlParser
+    public class PmaXmlParser
     {
-        public static bool isError(string response)
+        public static bool IsError(string response)
         {
             XDocument entry = XDocument.Parse(response);
             string responseType = (string)entry.Element("response").Element("responseType");
             return responseType.Equals("1");
         }
 
-        public static bool isSuccess(string response)
+        public static bool IsSuccess(string response)
         {
-            return !isError(response);
+            return !IsError(response);
         }
 
-        public static string getErrorMessage(string response)
+        public static string GetErrorMessage(string response)
         {
             XDocument entry = XDocument.Parse(response);
             return (string)entry.Element("response").Element("content").Element("erros").Element("erro");

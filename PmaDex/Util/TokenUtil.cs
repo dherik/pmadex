@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PmaDex.Util
 {
-    class TokenUtil
+    public class TokenUtil
     {
         public static void SaveToken(string token)
         {
@@ -19,7 +19,7 @@ namespace PmaDex.Util
         {
             string token = IsolatedStorageSettings.ApplicationSettings.Contains("token")
                 ? (string)IsolatedStorageSettings.ApplicationSettings["token"]
-                : ""; // false is default value 
+                : string.Empty; // false is default value 
             return token;
         }
     }

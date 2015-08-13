@@ -27,8 +27,8 @@ namespace PmaDex
 
         private void lstConfigOptions_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ListBox lBox = (sender as ListBox);
-            ListBoxItem lbi = lBox.SelectedItem as ListBoxItem;
+            ListBox lstBox = sender as ListBox;
+            ListBoxItem lbi = lstBox.SelectedItem as ListBoxItem;
             if (lbi != null && lbi.Name == "login")
             {
                 Dispatcher.BeginInvoke(() =>
@@ -45,7 +45,7 @@ namespace PmaDex
                 });
             }
 
-            lBox.SelectedIndex = -1;
+            lstBox.SelectedIndex = -1;
         }
     }
 }

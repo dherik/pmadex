@@ -14,25 +14,19 @@ namespace PmaDex
 {
     public partial class ViewAppointmentPage : PhoneApplicationPage
     {
-
-        //private bool isInit { get; set; }
-
         public ViewAppointmentPage()
         {
             InitializeComponent();
-            //isInit = false;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             DailyAppointment dailyAppointment = PhoneApplicationService.Current.State["dailyAppointment"] as DailyAppointment;
-            loadAppointment(dailyAppointment);
+            LoadAppointment(dailyAppointment);
         }
-
         
-        private async void loadAppointment(DailyAppointment dailyAppointment)
+        private async void LoadAppointment(DailyAppointment dailyAppointment)
         {
-            //this.txtResume.Text = dailyAppointment.resume;
             this.txtStart.Text = dailyAppointment.Inicio;
             this.txtEnd.Text = dailyAppointment.Fim;
             this.txtInterval.Text = dailyAppointment.Intervalo;
@@ -40,7 +34,7 @@ namespace PmaDex
             this.txtDate.Text = dailyAppointment.Data;
             
             PmaServices pma = new PmaServices();
-            List<Appointment> app = await pma.findAppointments(TokenUtil.GetToken(), dailyAppointment.Data);
+            List<Appointment> app = await pma.FindAppointments(TokenUtil.GetToken(), dailyAppointment.Data);
             this.llsAppointment.ItemsSource = app.ToArray();
         }
 
