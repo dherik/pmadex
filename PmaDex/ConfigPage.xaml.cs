@@ -17,7 +17,7 @@ namespace PmaDex
             InitializeComponent();
         }
 
-        private void login_Click(object sender, RoutedEventArgs e)
+        private void Login_Click(object sender, RoutedEventArgs e)
         {
             Dispatcher.BeginInvoke(() =>
             {
@@ -25,7 +25,7 @@ namespace PmaDex
             });
         }
 
-        private void lstConfigOptions_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void LstConfigOptions_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ListBox lstBox = sender as ListBox;
             ListBoxItem lbi = lstBox.SelectedItem as ListBoxItem;

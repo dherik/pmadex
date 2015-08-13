@@ -12,7 +12,7 @@ namespace PmaDex
     public partial class ListAppointmentsPage : PhoneApplicationPage
     {
 
-        ProgressIndicator ProgressIndicator = new ProgressIndicator() { IsVisible = true, IsIndeterminate = false, Text = "Consultando..." };
+        ProgressIndicator progressIndicator = new ProgressIndicator() { IsVisible = true, IsIndeterminate = false, Text = "Consultando..." };
 
         public ListAppointmentsPage()
         {
@@ -25,15 +25,15 @@ namespace PmaDex
             string startDate = dpkStartDate.FormatToDiaMesAno();
             string endDate = dpkEndDate.FormatToDiaMesAno();
 
-            SystemTray.SetProgressIndicator(this, ProgressIndicator);
-            setProgressIndicator(true);
+            SystemTray.SetProgressIndicator(this, progressIndicator);
+            SetProgressIndicator(true);
             List<DailyAppointment> list = await pmaServices.FindDailyAppointments(TokenUtil.GetToken(), startDate, endDate);
-            setProgressIndicator(false);
+            SetProgressIndicator(false);
 
             llsDailyAppointment.ItemsSource = list.ToArray();
         }
 
-        private void setProgressIndicator(bool value)
+        private void SetProgressIndicator(bool value)
         {
             SystemTray.ProgressIndicator.IsIndeterminate = value;
             SystemTray.ProgressIndicator.IsVisible = value;

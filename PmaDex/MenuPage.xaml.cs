@@ -20,12 +20,12 @@ namespace PmaDex
     {
         ProgressIndicator progressIndicator = new ProgressIndicator() { IsVisible = true, IsIndeterminate = false, Text = "Consultando..." };
 
-        private bool isInit { get; set; }
+        private bool IsInit { get; set; }
 
         public MenuPage()
         {
             InitializeComponent();
-            isInit = false;
+            IsInit = false;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -35,11 +35,11 @@ namespace PmaDex
                 string token = NavigationContext.QueryString["token"];
                 TokenUtil.SaveToken(token);
 
-                if (!isInit)
+                if (!IsInit)
                 {
                     LoadProjects(token);
                     this.dpkDate.Value = DateTime.Now;
-                    isInit = true;
+                    IsInit = true;
                 }
             }
 
@@ -99,7 +99,8 @@ namespace PmaDex
             string effortInMinutes = tpkEffort.GetEffortInMinutes();
 
             PmaServices pmaServices = new PmaServices();
-            pmaServices.CreateTheOneAppointment(token, 
+            pmaServices.CreateTheOneAppointment(
+                token, 
                 day, 
                 tpkStartHour.ValueString, 
                 tpkEndHour.ValueString,
@@ -166,7 +167,6 @@ namespace PmaDex
         {
             GoToConfigPage();
         }
-
 
         private void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

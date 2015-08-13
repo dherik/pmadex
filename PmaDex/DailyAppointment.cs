@@ -10,7 +10,8 @@
 
         public string Intervalo { get; set; }
 
-        public string Resumo {
+        public string Resumo 
+        {
             get 
             {
                 return this.Inicio + " - " + this.Fim + " (" + this.Intervalo + ")"; 

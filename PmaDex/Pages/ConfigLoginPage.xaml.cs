@@ -22,7 +22,7 @@
             this.togSaveLogin.IsChecked = saveLogin;
         }
 
-        private void togSaveLogin_Checked(object sender, RoutedEventArgs e)
+        private void TogSaveLogin_Checked(object sender, RoutedEventArgs e)
         {
             this.togSaveLogin.Content = "Ativado";
             IsolatedStorageSettings settings = IsolatedStorageSettings.ApplicationSettings;
@@ -30,7 +30,7 @@
             settings.Save();
         }
 
-        private void togSaveLogin_Unchecked(object sender, RoutedEventArgs e)
+        private void TogSaveLogin_Unchecked(object sender, RoutedEventArgs e)
         {
             this.togSaveLogin.Content = "Desativado";
             IsolatedStorageSettings settings = IsolatedStorageSettings.ApplicationSettings;

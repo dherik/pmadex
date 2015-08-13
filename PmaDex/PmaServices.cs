@@ -39,7 +39,8 @@ namespace PmaDex
 
         public async Task<string> Login(string username, string password)
         {
-            var values = new List<KeyValuePair<string, string>> { 
+            var values = new List<KeyValuePair<string, string>> 
+            { 
                 new KeyValuePair<string, string>("username", username), 
                 new KeyValuePair<string, string>("password", password) 
             };
@@ -52,7 +53,8 @@ namespace PmaDex
 
         public async Task<List<PmaActivity>> LoadActivities(string token, string idProject)
         {
-            var values = new List<KeyValuePair<string, string>> { 
+            var values = new List<KeyValuePair<string, string>> 
+            { 
                 new KeyValuePair<string, string>("token", token), 
                 new KeyValuePair<string, string>("projeto", idProject) 
             };
@@ -132,7 +134,8 @@ namespace PmaDex
         // Parameters: token, data(yyyy-mm-dd), inicio(HH:MM), intervalo(HH:MM), fim(HH:MM) 
         public async Task<string> CreateDayAppointment(string token, string day, string startHour, string endHour, string restHour)
         {
-            var values = new List<KeyValuePair<string, string>> { 
+            var values = new List<KeyValuePair<string, string>> 
+            { 
                 new KeyValuePair<string, string>("token", token), 
                 new KeyValuePair<string, string>("data", day),
                 new KeyValuePair<string, string>("inicio", startHour),
@@ -157,7 +160,8 @@ namespace PmaDex
 
         public async Task<string> CreateAppointment(string token, string day, string idActivity, string effort, string description)
         {
-            var values = new List<KeyValuePair<string, string>> { 
+            var values = new List<KeyValuePair<string, string>> 
+            { 
                 new KeyValuePair<string, string>("token", token), 
                 new KeyValuePair<string, string>("data", day),
                 new KeyValuePair<string, string>("atividadeId", idActivity),
@@ -181,7 +185,8 @@ namespace PmaDex
         // token, dataInicial(yyyy-mm-dd), dataFinal(yyyy-mm-dd) 
         public async Task<List<DailyAppointment>> FindDailyAppointments(string token, string startDate, string endDate)
         {
-            var values = new List<KeyValuePair<string, string>> { 
+            var values = new List<KeyValuePair<string, string>> 
+            { 
                 new KeyValuePair<string, string>("token", token), 
                 new KeyValuePair<string, string>("dataInicial", startDate),
                 new KeyValuePair<string, string>("dataFinal", endDate)            
@@ -223,7 +228,8 @@ namespace PmaDex
         // token, data(yyyy-mm-dd) 
         public async Task<List<Appointment>> FindAppointments(string token, string data)
         {
-            var values = new List<KeyValuePair<string, string>> { 
+            var values = new List<KeyValuePair<string, string>> 
+            { 
                 new KeyValuePair<string, string>("token", token), 
                 new KeyValuePair<string, string>("data", data)
             };

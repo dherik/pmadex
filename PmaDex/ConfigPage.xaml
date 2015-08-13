@@ -59,7 +59,7 @@
             <StackPanel>
                 
                 <ListBox x:Name="lstConfigOptions"
-                         SelectionChanged="lstConfigOptions_SelectionChanged">
+                         SelectionChanged="LstConfigOptions_SelectionChanged">
                     <ListBox.Items>
                         <ListBoxItem x:Name="login" >
                             <StackPanel Orientation="Horizontal" Margin="12,2,0,4">

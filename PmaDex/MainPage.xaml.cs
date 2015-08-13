@@ -64,7 +64,10 @@ namespace PmaDex
 
         private async void Login_Click(object sender, RoutedEventArgs e)
         {
-            if (user.Text == string.Empty || pwBox.Password == string.Empty) { MessageBox.Show("Preencha o usuário e a senha"); }
+            if (user.Text == string.Empty || pwBox.Password == string.Empty) 
+            {
+                MessageBox.Show("Preencha o usuário e a senha"); 
+            }
 
             bool isNetwork = NetworkInterface.GetIsNetworkAvailable();
             if (!isNetwork)
@@ -74,19 +77,19 @@ namespace PmaDex
             }
 
             SystemTray.SetProgressIndicator(this, progressIndicator);
-            setProgressIndicator(true);
+            SetProgressIndicator(true);
             PmaServices pmaServices = new PmaServices();
             string response = await pmaServices.Login(this.user.Text, this.pwBox.Password);
             GetToken(response);
             if (!PmaXmlParser.IsError(response))
             {
-                saveLoginCredentials(this.user.Text, this.pwBox.Password);
+                SaveLoginCredentials(this.user.Text, this.pwBox.Password);
             }
 
-            setProgressIndicator(false);
+            SetProgressIndicator(false);
         }
 
-        private void saveLoginCredentials(string user, string password)
+        private void SaveLoginCredentials(string user, string password)
         {
             IsolatedStorageSettings settings = IsolatedStorageSettings.ApplicationSettings;
             bool saveLogin = (bool)settings["saveLogin"];
@@ -100,12 +103,11 @@ namespace PmaDex
             
         }
 
-        private void setProgressIndicator(bool value)
+        private void SetProgressIndicator(bool value)
         {
             SystemTray.ProgressIndicator.IsIndeterminate = value;
             SystemTray.ProgressIndicator.IsVisible = value;
         }
-
 
         private void GetToken(string response)
         {
@@ -119,7 +121,7 @@ namespace PmaDex
             }
 
             string token = (string)entry.Element("response").Element("content").Element("token");
-            if (token != null && !token.Trim().Equals(""))
+            if (token != null && !token.Trim().Equals(string.Empty))
             {
                 Dispatcher.BeginInvoke(() =>
                 {
@@ -128,7 +130,5 @@ namespace PmaDex
             }
             
         }
-
     }
-
 }

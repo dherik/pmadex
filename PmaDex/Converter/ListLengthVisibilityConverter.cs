@@ -13,9 +13,9 @@ namespace PmaDex.Converter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-
             bool invertOuput = false;
-            if (parameter != null) {
+            if (parameter != null) 
+            {
                 bool.TryParse((string)parameter, out invertOuput);
             }
 
@@ -31,8 +31,7 @@ namespace PmaDex.Converter
             }
         }
 
-        public object ConvertBack(object value, Type targetType, 
-            object parameter, System.Globalization.CultureInfo culture)
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             throw new NotSupportedException();
         }
